@@ -5,6 +5,7 @@ import Overview from './pages/Overview'
 import DemandAnalysis from './pages/DemandAnalysis'
 import Reservations from './pages/Reservations'
 import Settings from './pages/Settings'
+import MapView from './pages/MapView'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
               <Route path="/"             element={<Overview />} />
               <Route path="/demand"       element={<DemandAnalysis />} />
               <Route path="/reservations" element={<Reservations />} />
+              <Route path="/map"          element={<MapView />} />
               <Route path="/settings"     element={<Settings />} />
             </Routes>
           </main>

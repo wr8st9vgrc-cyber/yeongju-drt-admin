@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
+import { ChevronUp, ChevronDown, ChevronsUpDown, Download } from 'lucide-react'
 import { reservationData, Reservation, ReservationStatus } from '../../data/mockData'
+import { downloadCSV } from '../../utils/csvDownload'
 
 const statusStyle: Record<ReservationStatus, { bg: string; text: string; label: string }> = {
   완료:   { bg: '#f0fdf4', text: '#16a34a', label: '완료' },
@@ -106,6 +107,21 @@ export default function ReservationTable({ limit, showFilter = true }: Props) {
                 </button>
               ))}
             </div>
+            {/* CSV 다운로드 */}
+            <button
+              onClick={() => {
+                const headers = ['예약번호', '날짜', '시간', '출발지', '목적지', '인원', '상태']
+                const rows = filtered.map((r) => [
+                  r.id, r.date, r.time, r.departure, r.destination, r.passengers, r.status,
+                ])
+                const label = filter === '전체' ? '전체' : filter
+                downloadCSV(`DRT_예약현황_${label}_${new Date().toISOString().slice(0, 10)}.csv`, headers, rows)
+              }}
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-gray-50 text-gray-500 hover:bg-menthe hover:text-white transition-all font-medium"
+            >
+              <Download size={13} />
+              CSV
+            </button>
           </div>
         </div>
       )}

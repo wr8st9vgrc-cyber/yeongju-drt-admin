@@ -5,6 +5,7 @@ const titleMap: Record<string, { title: string; subtitle: string }> = {
   '/':             { title: '개요',      subtitle: '영주 관광 DRT 전체 현황' },
   '/demand':       { title: '수요 분석', subtitle: '시간대별 · 권역별 · 시즌별 수요 패턴' },
   '/reservations': { title: '예약 현황', subtitle: '실시간 예약 및 탑승 이력 관리' },
+  '/map':          { title: '노선 지도', subtitle: '영주역 · 풍기역 출발 DRT 노선 시각화' },
   '/settings':     { title: '운영 설정', subtitle: '배차 및 노선 운영 파라미터' },
 }
 

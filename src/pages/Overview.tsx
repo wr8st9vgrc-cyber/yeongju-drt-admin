@@ -5,6 +5,7 @@ import HourlyDemandChart from '../components/charts/HourlyDemandChart'
 import WeeklyPatternChart from '../components/charts/WeeklyPatternChart'
 import MonthlySeasonChart from '../components/charts/MonthlySeasonChart'
 import RegionHeatmap from '../components/charts/RegionHeatmap'
+import ForecastChart from '../components/charts/ForecastChart'
 import ReservationTable from '../components/tables/ReservationTable'
 import { kpiData } from '../data/mockData'
 
@@ -56,7 +57,6 @@ export default function Overview() {
           <HourlyDemandChart />
         </div>
         <div className="col-span-1">
-          {/* Region summary card */}
           <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-50 h-full">
             <h3 className="text-sm font-bold text-gray-800 mb-4">권역별 수요 비중</h3>
             <div className="space-y-3">
@@ -82,7 +82,6 @@ export default function Overview() {
                 </div>
               ))}
             </div>
-
             <div className="mt-5 pt-4 border-t border-gray-50">
               <p className="text-xs text-gray-500 font-medium mb-1">핵심 인사이트</p>
               <p className="text-xs text-gray-400 leading-relaxed">
@@ -95,6 +94,9 @@ export default function Overview() {
 
       {/* Heatmap */}
       <RegionHeatmap />
+
+      {/* ★ 향후 30일 관광 수요 예측 (한국관광공사 실시간 API) */}
+      <ForecastChart />
 
       {/* Bottom row */}
       <div className="grid grid-cols-2 gap-4">

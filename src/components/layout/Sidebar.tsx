@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   BarChart2,
   ClipboardList,
+  Map,
   Settings,
   Bus,
 } from 'lucide-react'
@@ -11,6 +12,7 @@ const navItems = [
   { to: '/',             icon: LayoutDashboard, label: '개요' },
   { to: '/demand',       icon: BarChart2,       label: '수요 분석' },
   { to: '/reservations', icon: ClipboardList,   label: '예약 현황' },
+  { to: '/map',          icon: Map,             label: '노선 지도' },
   { to: '/settings',     icon: Settings,        label: '운영 설정' },
 ]
 
