@@ -9,9 +9,8 @@ import { X } from 'lucide-react'
  *   이 좌표는 모바일 앱(my-drt-app: src/data/yeongju.js)의 폴백 값과
  *   동일하게 유지해야 한다. 이전에는 두 리포의 값이 서로 달랐다.
  *
- *   확정 좌표는 한국관광공사 TourAPI의 mapx/mapy를 정본으로 삼는다:
- *     TOUR_API_KEY=xxx node scripts/fetch-coords.mjs
- *   실행 후 출력값으로 양쪽 리포를 함께 갱신할 것.
+ *   관광지 3곳의 좌표는 2026-07-19 TourAPI(KorService2) 응답으로 검증 완료.
+ *   영주역·풍기역은 TourAPI에 등록이 없어 미검증 상태다.
  */
 
 type LocType = 'station' | 'tourist'
@@ -61,8 +60,8 @@ const LOCS: MapLoc[] = [
   {
     id: 'sosu',
     name: '소수서원',
-    lat: 36.8751,
-    lng: 128.4577,
+    lat: 36.9252,
+    lng: 128.5791,
     type: 'tourist',
     color: '#A4CF4A',
     dailyDemand: 147,
@@ -72,8 +71,8 @@ const LOCS: MapLoc[] = [
   {
     id: 'buseok',
     name: '부석사',
-    lat: 36.9460,
-    lng: 128.6631,
+    lat: 36.9984,
+    lng: 128.6871,
     type: 'tourist',
     color: '#A4CF4A',
     dailyDemand: 120,
@@ -83,8 +82,8 @@ const LOCS: MapLoc[] = [
   {
     id: 'museom',
     name: '무섬마을',
-    lat: 36.8238,
-    lng: 128.5089,
+    lat: 36.7319,
+    lng: 128.6216,
     type: 'tourist',
     color: '#8ab83a',
     dailyDemand: 45,

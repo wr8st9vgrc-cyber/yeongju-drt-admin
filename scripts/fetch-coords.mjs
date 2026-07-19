@@ -1,7 +1,8 @@
-// 관광공사 TourAPI에서 관광지 확정 좌표를 조회해 출력한다.
-// 앱/대시보드 하드코딩 좌표(폴백)를 갱신할 때 1회 실행.
-//
+// 관광공사 TourAPI(KorService2)에서 영주시 관광지 확정 좌표를 조회해 출력한다.
 //   TOUR_API_KEY=xxxx node scripts/fetch-coords.mjs
+//
+// ⚠️ areaCode 파라미터는 쓰지 않는다. 신규 레코드는 areacode 필드가 비어 있어
+//    필터하면 결과가 0건이 된다. 법정동 코드(lDongRegnCd/lDongSignguCd)를 쓴다.
 
 const KEY = process.env.TOUR_API_KEY;
 if (!KEY) {
@@ -25,8 +26,9 @@ for (const [id, keyword] of Object.entries(SPOTS)) {
     MobileApp: 'YeongjuDRT',
     _type: 'json',
     keyword,
-    areaCode: '37',
-    sigunguCode: '7', // 영주시 (응답이 비면 이 줄을 지우고 재실행)
+    contentTypeId: '12',
+    lDongRegnCd: '47',  // 경상북도
+    lDongSignguCd: '210', // 영주시
   });
 
   try {
@@ -38,7 +40,7 @@ for (const [id, keyword] of Object.entries(SPOTS)) {
     const list = Array.isArray(items) ? items : [items];
 
     console.log(`\n── ${id} (${keyword}) ─────────────────`);
-    if (!list.length) {
+    if (!list.length || !list[0]) {
       console.log('  결과 없음');
       continue;
     }
