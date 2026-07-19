@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fetch:coords": "node scripts/fetch-coords.mjs"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

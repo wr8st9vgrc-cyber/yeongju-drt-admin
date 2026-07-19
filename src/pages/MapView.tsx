@@ -3,7 +3,16 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { X } from 'lucide-react'
 
-/* ─── 데이터 ─────────────────────────────────────────── */
+/* ─── 데이터 ───────────────────────────────────────────
+ *
+ * ⚠️ 좌표 정합성
+ *   이 좌표는 모바일 앱(my-drt-app: src/data/yeongju.js)의 폴백 값과
+ *   동일하게 유지해야 한다. 이전에는 두 리포의 값이 서로 달랐다.
+ *
+ *   확정 좌표는 한국관광공사 TourAPI의 mapx/mapy를 정본으로 삼는다:
+ *     TOUR_API_KEY=xxx node scripts/fetch-coords.mjs
+ *   실행 후 출력값으로 양쪽 리포를 함께 갱신할 것.
+ */
 
 type LocType = 'station' | 'tourist'
 
@@ -30,8 +39,8 @@ const LOCS: MapLoc[] = [
   {
     id: 'yeongju',
     name: '영주역',
-    lat: 36.8068,
-    lng: 128.6241,
+    lat: 36.8003,
+    lng: 128.6285,
     type: 'station',
     color: '#35C8B4',
     dailyDemand: 247,
@@ -41,8 +50,8 @@ const LOCS: MapLoc[] = [
   {
     id: 'punggi',
     name: '풍기역',
-    lat: 36.8927,
-    lng: 128.4883,
+    lat: 36.8171,
+    lng: 128.4854,
     type: 'station',
     color: '#2aaa99',
     dailyDemand: 128,
@@ -53,7 +62,7 @@ const LOCS: MapLoc[] = [
     id: 'sosu',
     name: '소수서원',
     lat: 36.8751,
-    lng: 128.4856,
+    lng: 128.4577,
     type: 'tourist',
     color: '#A4CF4A',
     dailyDemand: 147,
@@ -63,8 +72,8 @@ const LOCS: MapLoc[] = [
   {
     id: 'buseok',
     name: '부석사',
-    lat: 36.9903,
-    lng: 128.4869,
+    lat: 36.9460,
+    lng: 128.6631,
     type: 'tourist',
     color: '#A4CF4A',
     dailyDemand: 120,
@@ -72,10 +81,10 @@ const LOCS: MapLoc[] = [
     description: '676년 창건 국보급 사찰 · 유네스코 세계유산',
   },
   {
-    id: 'museon',
+    id: 'museom',
     name: '무섬마을',
-    lat: 36.8050,
-    lng: 128.5648,
+    lat: 36.8238,
+    lng: 128.5089,
     type: 'tourist',
     color: '#8ab83a',
     dailyDemand: 45,
@@ -87,10 +96,10 @@ const LOCS: MapLoc[] = [
 const ROUTES: MapRoute[] = [
   { from: 'yeongju', to: 'sosu',   demand: 95 },
   { from: 'yeongju', to: 'buseok', demand: 85 },
-  { from: 'yeongju', to: 'museon', demand: 45 },
+  { from: 'yeongju', to: 'museom', demand: 45 },
   { from: 'punggi',  to: 'sosu',   demand: 52 },
   { from: 'punggi',  to: 'buseok', demand: 48 },
-  { from: 'punggi',  to: 'museon', demand: 25 },
+  { from: 'punggi',  to: 'museom', demand: 25 },
 ]
 
 /* ─── 마커 아이콘 생성 ───────────────────────────────── */
@@ -311,7 +320,7 @@ function SidePanel({ selectedId, onClose }: {
           <div className="bg-gray-50 rounded-xl p-3 text-xs text-gray-500 leading-relaxed">
             {loc.id === 'sosu' && '소수서원은 풍기역과 가장 가까운 북부권 핵심 관광지입니다. 5·9~11월 성수기에 집중 배차가 필요합니다.'}
             {loc.id === 'buseok' && '부석사는 영주·풍기 양방향 수요가 고른 편입니다. 부석사 구간은 산악 도로 특성상 소형 DRT 차량이 적합합니다.'}
-            {loc.id === 'museon' && '무섬마을은 남부권 보조 수요 거점으로, 영주역 출발 비중이 높습니다. 평일 수요가 상대적으로 안정적입니다.'}
+            {loc.id === 'museom' && '무섬마을은 남부권 보조 수요 거점으로, 영주역 출발 비중이 높습니다. 평일 수요가 상대적으로 안정적입니다.'}
           </div>
         )}
       </div>

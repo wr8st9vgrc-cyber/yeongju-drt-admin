@@ -110,34 +110,70 @@ function LoadingState() {
 export default function ForecastChart() {
   const [data,   setData]   = useState<ForecastBySpot | null>(null)
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
+  const [errorMsg, setErrorMsg] = useState<string>('')
+  const [retryKey, setRetryKey] = useState(0)
 
   useEffect(() => {
     let cancelled = false
+    setStatus('loading')
 
     fetchForecast()
       .then((result) => {
-        if (!cancelled) {
-          setData(result)
-          setStatus('success')
+        if (cancelled) return
+        const total = Object.values(result).reduce((n, arr) => n + arr.length, 0)
+        if (total === 0) {
+          setErrorMsg('영주시 관광지 예측 데이터가 반환되지 않았습니다.')
+          setStatus('error')
+          return
         }
+        setData(result)
+        setStatus('success')
       })
-      .catch(() => {
-        if (!cancelled) setStatus('error')
+      .catch((e: unknown) => {
+        if (cancelled) return
+        setErrorMsg(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.')
+        setStatus('error')
       })
 
     return () => { cancelled = true }
-  }, [])
+  }, [retryKey])
 
-  // 로딩 중이거나 에러: "데이터를 불러오는 중입니다"
+  const Header = () => (
+    <div className="flex items-center justify-between mb-2">
+      <div>
+        <h3 className="text-sm font-bold text-gray-800">향후 30일 관광 수요 예측</h3>
+        <p className="text-xs text-gray-400 mt-0.5">
+          한국관광공사 관광지 집중률 · 경상북도 영주시
+        </p>
+      </div>
+    </div>
+  )
+
+  // 조회 실패: 원인과 재시도 수단을 명시한다 (조용한 실패 방지)
+  if (status === 'error') {
+    return (
+      <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-50">
+        <Header />
+        <div className="flex flex-col items-center justify-center py-10 gap-3">
+          <p className="text-sm font-medium text-gray-600">
+            관광공사 API를 불러오지 못했습니다
+          </p>
+          <p className="text-xs text-gray-400">{errorMsg}</p>
+          <button
+            onClick={() => setRetryKey((k) => k + 1)}
+            className="mt-1 text-xs px-4 py-1.5 rounded-lg bg-menthe text-white font-semibold hover:opacity-90 transition"
+          >
+            다시 시도
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (status !== 'success' || !data) {
     return (
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-50">
-        <div className="flex items-center justify-between mb-2">
-          <div>
-            <h3 className="text-sm font-bold text-gray-800">향후 30일 관광 수요 예측</h3>
-            <p className="text-xs text-gray-400 mt-0.5">한국관광공사 관광지 집중률 · 경상북도 영주시</p>
-          </div>
-        </div>
+        <Header />
         <LoadingState />
       </div>
     )
